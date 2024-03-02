@@ -20,3 +20,12 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`Server listening on http://localhost:${port}`);
 });
+
+// Routes
+app.use('/bugs', require('./routes/bugs'));
+app.use('/users', require('./routes/users'));
+app.use('/projects', require('./routes/projects'));
+app.use('/comments', require('./routes/comments'));
+app.use('/bughistory', require('./routes/bughistory'));
+app.use('/projectmembership', require('./routes/projectmembership'));
+app.use('/auth', require('./routes/auth'));

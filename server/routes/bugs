@@ -1,0 +1,15 @@
+const express = require('express');
+const Bug = require('../models/Bugs');
+
+const app = express();
+
+//Create bug- POST API
+app.post('/create',async (req, res) => {
+    try {
+        const newBug = new Bug(req.body);
+        await newBug.save();
+        res.status(201).send(bug);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
