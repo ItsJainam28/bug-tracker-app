@@ -23,14 +23,14 @@ app.listen(port, () => {
 
 // Routes
 const userRouter = require('./routes/users');
-// const projectRouter = require('./routes/projects');
+const projectRouter = require('./routes/projects');
 const bugRouter = require('./routes/bugs');
 // const commentRouter = require('./routes/comments');
 // const bugHistoryRouter = require('./routes/bughistory');
 // const projectMembershipRouter = require('./routes/projectmembership');
 
 app.use('/users', userRouter);
-// app.use('/projects', projectRouter);
+app.use('/projects', projectRouter);
 app.use('/bugs', bugRouter);
 // app.use('/comments', commentRouter);
 // app.use('/bughistory', bugHistoryRouter);
