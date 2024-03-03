@@ -14,7 +14,6 @@ router.post('/signup',
 ],async (req, res) => {
     try{
         // Check for validation errors
-        console.log(req.body);
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
@@ -41,6 +40,27 @@ router.post('/signup',
     
     }
 });
+
+// Login route
+router.post('/login', async (req, res) => {
+    try{
+        // Find the user
+        const user = await User.findOne({ email: req.body.email });
+        if (!user) {
+            return res.status(400).json({ error: 'Invalid email or password' });
+        }
+        // Compare the passwords
+        const validPassword = await bcrypt.compare(req.body.password, user.password);
+        if (!validPassword) {
+            return res.status(400).json({ error: 'Invalid email or password' });
+        }
+        // Generate a token
+        const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET);
+        res.status(200).send({user, token});
+    }catch(e){
+        res.status(500).json({ error: e.message });
+    }
+})
 
 module.exports = router;
 
