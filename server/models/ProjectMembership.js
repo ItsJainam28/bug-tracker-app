@@ -18,5 +18,5 @@ const projectMembershipSchema = new mongoose.Schema({
     }
 });
 
-const ProjectMembership = mongoose.model('ProjectMembership', projectMembershipSchema);
+const ProjectMembership = mongoose.model('ProjectMembership', projectMembershipSchema, 'ProjectMembership');
 module.exports = ProjectMembership;

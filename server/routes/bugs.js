@@ -1,10 +1,11 @@
 const express = require('express');
 const Bug = require('../models/Bugs');
+const router = express.Router();
 
 const app = express();
 
 //Create bug- POST API
-app.post('/create',async (req, res) => {
+router.post('/create',async (req, res) => {
     try {
         const newBug = new Bug(req.body);
         await newBug.save();
@@ -13,3 +14,5 @@ app.post('/create',async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+
+module.exports = router;

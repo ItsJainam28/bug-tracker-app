@@ -22,10 +22,16 @@ app.listen(port, () => {
 });
 
 // Routes
-app.use('/bugs', require('./routes/bugs'));
-app.use('/users', require('./routes/users'));
-app.use('/projects', require('./routes/projects'));
-app.use('/comments', require('./routes/comments'));
-app.use('/bughistory', require('./routes/bughistory'));
-app.use('/projectmembership', require('./routes/projectmembership'));
-app.use('/auth', require('./routes/auth'));
+const userRouter = require('./routes/users');
+// const projectRouter = require('./routes/projects');
+const bugRouter = require('./routes/bugs');
+// const commentRouter = require('./routes/comments');
+// const bugHistoryRouter = require('./routes/bughistory');
+// const projectMembershipRouter = require('./routes/projectmembership');
+
+app.use('/users', userRouter);
+// app.use('/projects', projectRouter);
+app.use('/bugs', bugRouter);
+// app.use('/comments', commentRouter);
+// app.use('/bughistory', bugHistoryRouter);
+// app.use('/projectmembership', projectMembershipRouter);

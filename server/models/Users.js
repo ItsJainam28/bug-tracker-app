@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         validate: {
             validator: function(password) {
-                return password.length >= 5;
+                return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{5,}$/.test(password); 
             },
             message: 'Password must be at least 5 characters long'
         }
@@ -34,5 +34,5 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema, 'Users');
 module.exports = User;

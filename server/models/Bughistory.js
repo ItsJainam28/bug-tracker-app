@@ -30,5 +30,5 @@ const bughistorySchema = new mongoose.Schema({
 
 });
 
-const bugHistory = mongoose.model('BugHistory', bughistorySchema);
+const bugHistory = mongoose.model('BugHistory', bughistorySchema, 'Bughistory');
 module.exports = bugHistory;
