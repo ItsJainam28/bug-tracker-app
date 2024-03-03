@@ -49,7 +49,7 @@ router.post('/create', authMiddleware,
     }
 });
 
-//Get all projects for a Admin user- GET API
+//Get all projects for a  user- GET API
 router.get('/all', authMiddleware, async (req, res) => {
     try {
         const projectsMemberships = await ProjectMembership.find({ user: req.user._id });
@@ -60,5 +60,60 @@ router.get('/all', authMiddleware, async (req, res) => {
     }
 });
 
+//Delete a project- DELETE API
+
+router.delete('/:id', authMiddleware, async (req, res) => {
+    try {
+        const project = await Project.findOne({ _id: req.params.id});
+        const projectMemberships = await ProjectMembership.findOne({ project: req.params.id, user: req.user._id});
+        if (projectMemberships.role !== 'Admin') {
+            return res.status(401).json({ message: 'You are not authorized to delete this project' });
+        }
+        if (!project) {
+            return res.status(404).json({ message: 'Project not found' });
+        }
+        await Project.deleteOne({ _id: req.params.id });
+        await ProjectMembership.deleteMany({ project: req.params.id });
+        res.status(200).json({ message: 'Project deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+//Update a project- PUT API
+
+router.put('/:id', authMiddleware, async (req, res) => {
+    try {
+        const project = await Project.findOne({ _id: req.params.id});
+        const projectMemberships = await ProjectMembership.findOne({ project: req.params.id, user: req.user._id});
+        if (projectMemberships.role !== 'Admin') {
+            return res.status(401).json({ message: 'You are not authorized to update this project' });
+        }
+        if (!project) {
+            return res.status(404).json({ message: 'Project not found' });
+        }
+        const updatedProject = await Project.updateOne({ _id: req.params.id }, req.body);
+        res.status(200).json(updatedProject);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+//Get project by id- GET API
+router.get('/:id', authMiddleware, async (req, res) => {
+    try {
+        const project = await Project.findOne({ _id: req.params.id });
+        const projectMemberships = await ProjectMembership.findOne({ project: req.params.id, user: req.user._id});
+        if (!projectMemberships) {
+            return res.status(401).json({ message: 'You are not authorized to view this project' });
+        }
+        if (!project) {
+            return res.status(404).json({ message: 'Project not found' });
+        }
+        res.status(200).json(project);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
 
 module.exports = router;
