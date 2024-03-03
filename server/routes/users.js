@@ -4,6 +4,7 @@ const User = require('../models/Users');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { check, validationResult } = require('express-validator');
+const authMiddleware = require('../Middleware/auth');
 
 // Signup route
 router.post('/signup', 
@@ -62,5 +63,15 @@ router.post('/login', async (req, res) => {
     }
 })
 
+// Get current user
+// This route is protected, so only authenticated users can access it
+router.get('/me', authMiddleware,async (req, res) => {
+    try{
+        const user = req.user;
+        res.status(200).send(user);
+    }catch(e){
+        res.status(500).json({ error: e.message });
+    }
+})
 module.exports = router;
 
