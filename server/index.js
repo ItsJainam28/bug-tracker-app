@@ -25,13 +25,14 @@ app.listen(port, () => {
 const userRouter = require('./routes/users');
 const projectRouter = require('./routes/projects');
 const bugRouter = require('./routes/bugs');
+const projectMembershipRouter = require('./routes/projectmembership');
 // const commentRouter = require('./routes/comments');
 // const bugHistoryRouter = require('./routes/bughistory');
-// const projectMembershipRouter = require('./routes/projectmembership');
+
 
 app.use('/users', userRouter);
 app.use('/projects', projectRouter);
 app.use('/bugs', bugRouter);
 // app.use('/comments', commentRouter);
 // app.use('/bughistory', bugHistoryRouter);
-// app.use('/projectmembership', projectMembershipRouter);
+app.use('/projectmembership', projectMembershipRouter);
